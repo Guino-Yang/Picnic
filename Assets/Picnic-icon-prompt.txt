@@ -1,0 +1,25 @@
+Generated with the built-in image_gen tool on 2026-10-25.
+
+Use case: stylized-concept
+Asset type: production macOS application icon for Picnic, one square 1024 x 1024 image.
+Primary request: a tiny smiling sun peeking out of a picnic basket, in cream yellow and grass green. Cute, warm, quietly delightful.
+Subject: one rounded grass-green woven picnic basket in the lower center, with a thick soft rim and a simple arch handle behind the sun. A buttery cream-yellow sun rises halfway out of the basket, with a few short rounded rays, two tiny dark-green eyes and a small gentle smile. Keep the basket and sun as one strong, immediately readable silhouette.
+Style/medium: polished soft 3D clay illustration, restrained tactile relief, smooth matte surfaces, softly rounded edges, crafted like a high-quality macOS app icon. Very simple weave, no busy texture.
+Scene/backdrop: a warm ivory rounded-square app tile, seen perfectly straight on, filling approximately 88% of the square canvas with equal transparent margins. Transparent outside the tile, including the rounded corner cutouts. A subtle soft shadow may sit immediately under the tile. No surrounding scene.
+Composition/framing: single centered icon, generous breathing room inside the tile, large readable motif. No tilted tile or perspective mockup. Clean silhouette at 32 px.
+Lighting/mood: soft daylight from upper left, gentle shadows, friendly outdoor picnic feeling.
+Color palette: cream yellow, buttery sunshine, fresh muted grass green, warm ivory; dark green only for tiny face details. Avoid bright orange, neon green, muddy browns and hard black outlines.
+Constraints: no text, no letters, no watermark, no border, no additional objects, no extra characters, no icon sheet. Deliver the final icon asset itself, not a preview on a desktop. Preserve real alpha outside the rounded tile.
+
+Final cleanup edit, built-in image_gen:
+Use case: precise-object-edit.
+Edit target: the provided Picnic app icon.
+Change only the outer alpha silhouette: clean the rounded-square ivory tile edge into a perfectly smooth, symmetric macOS rounded square. Remove every stray, isolated, colored or white pixel outside the tile. Outside the tile must be genuinely transparent, with clean antialiasing and no speckled fringe. Use an exactly square canvas with approximately 6% transparent padding on every side.
+Keep the artwork inside the tile unchanged: the smiling buttery yellow sun, green woven basket and arch handle, colors, expression, soft clay texture, lighting, proportions and composition. Do not redesign or add anything. No text or watermark.
+Deliver one production app-icon PNG with real transparency, not a mockup.
+
+Final system-integration edit, built-in image_gen:
+Use case: background-extraction.
+Edit target: the supplied Picnic icon.
+Remove the entire ivory rounded-square tile/backplate behind the green picnic basket and smiling yellow sun. Keep ONLY the green woven basket, its green arch handle, and the buttery yellow smiling sun with rays, exactly matching the existing objects, expression, colors, matte clay finish, and lighting. Make all background space truly transparent, including the spaces inside the handle and around the sun. No rounded-square tile, no cream backdrop, no plate, no replacement background, no border, no text.
+This foreground-only cutout will be placed on a macOS-provided icon backplate, so do NOT include your own backplate. Enlarge and center the complete basket/handle/sun group to occupy about 92% of a square canvas, leaving even transparent padding. Keep all of the handle and basket visible; do not clip any part. Clean antialiased alpha edges with no isolated pixels. Deliver one transparent PNG.
