@@ -2,7 +2,7 @@
   <img src="Assets/Picnic-icon.png" width="160" alt="奶油黄小太阳探出草地绿野餐篮">
 </p>
 <h1 align="center">Picnic</h1>
-<p align="center">把 MacBook 带到阳光下。☀️ 🧺</p>
+<p align="center">把 MacBook 带到阳光下☀️ 🧺</p>
 <p align="center">An experimental macOS menu bar app for ambient-light-aware brightness boost.</p>
 <p align="center">
   <a href="https://github.com/Guino-Yang/Picnic/releases">下载</a> ·
