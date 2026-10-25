@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="490" viewBox="0 0 360 490" role="img" aria-labelledby="title desc">
+<title id="title">Picnic 菜单界面示意</title><desc id="desc">自动模式，两个滑块分别设置1500和3000lx。登录时启动已开启。</desc>
+<defs><filter id="shadow" x="-25%" y="-20%" width="150%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-opacity=".13"/></filter></defs>
+<rect width="360" height="490" rx="22" fill="#e9efdf"/>
+<rect x="0" y="0" width="360" height="38" rx="22" fill="#dae4cc"/>
+<path d="M274 13h20l-3 12h-14z M278 13l5-7m7 7-5-7" fill="none" stroke="#33412c" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="34" y="43" width="292" height="421" rx="13" fill="#fbfcf8" stroke="#ccd1c6" filter="url(#shadow)"/>
+<g font-family="-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans CJK SC',sans-serif" fill="#252a23">
+<text x="50" y="70" font-size="14" font-weight="600">🧺 Picnic</text><text x="308" y="70" font-size="12" fill="#70766c" text-anchor="end">未增强</text>
+<text x="50" y="93" font-size="12" fill="#666e61">自动待命 · 等待持续明亮环境</text><text x="50" y="113" font-size="11" fill="#71796c">环境光 600 lx · 仅内屏</text>
+<g stroke="#dce0d7"><path d="M45 125h270 M45 210h270 M45 367h270 M45 403h270"/></g>
+<g font-size="13"><text x="70" y="148">关闭</text><text x="50" y="172">✓</text><text x="70" y="172">自动</text><text x="70" y="196">手动</text></g>
+<text x="50" y="235" font-size="12">1.5× 轻增强</text><text x="308" y="235" text-anchor="end" font-size="12">1500 lx</text>
+<rect x="50" y="248" width="258" height="5" rx="2.5" fill="#dfe3da"/><rect x="50" y="248" width="115" height="5" rx="2.5" fill="#678347"/><circle cx="165" cy="250.5" r="8" fill="white" stroke="#b7c0af"/>
+<text x="50" y="282" font-size="12">2× 强增强</text><text x="308" y="282" text-anchor="end" font-size="12">3000 lx</text>
+<rect x="50" y="295" width="258" height="5" rx="2.5" fill="#dfe3da"/><rect x="50" y="295" width="99" height="5" rx="2.5" fill="#678347"/><circle cx="149" cy="297.5" r="8" fill="white" stroke="#b7c0af"/>
+<text x="50" y="331" font-size="10" fill="#71796c">升档持续 3 秒 · 降档持续 5 秒</text><text x="50" y="350" font-size="10" fill="#71796c">≤900 lx 关闭 · ≤1800 lx 降为 1.5×</text>
+<g font-size="13"><text x="50" y="390">✓</text><text x="70" y="390">登录时启动</text><text x="50" y="426">使用说明…</text><text x="50" y="451">退出 Picnic</text></g>
+<text x="180" y="481" text-anchor="middle" font-size="10" fill="#738066">界面示意 · 实际外观由 macOS 决定</text>
+</g></svg>
