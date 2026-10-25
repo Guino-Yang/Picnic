@@ -1,0 +1,40 @@
+Picnic was previously named SunLift. The attribution below includes its earlier implementations.
+
+Earlier SunLift versions used a Metal EDR multiply-overlay approach informed by:
+Apple: https://developer.apple.com/documentation/metal/performing-your-own-tone-mapping
+Light Up My Life: https://github.com/ben4mn/light-up-my-life
+Reference commit: a639d76643a167f6a63f023c025cc530ee03db7d
+The latter project declares MIT licensing in its README. Its OverlayManager and MetalRenderer were consulted when implementing the overlay setup. Attribution and license text are preserved below.
+
+Copyright (c) ben4mn and Light Up My Life contributors
+
+MIT License
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Additional implementation references (API usage and compositing concepts; not vendored):
+https://github.com/niklasr22/BrightIntosh/blob/main/BrightIntosh/UI/Overlay.swift
+https://github.com/starkdmi/BrightXDR/blob/main/BrightXDR/MetalView.swift
+These references show attaching the multiply filter directly to the CAMetalLayer.
+
+Version 1.5 replaces the full-screen multiply overlay with a 256-entry
+CoreGraphics display transfer table and a one-pixel ordinary EDR surface.
+API/technique references, independently implemented in SunLift:
+https://developer.apple.com/documentation/coregraphics/cgsetdisplaytransferbytable(_:_:_:_:_:)
+https://github.com/niklasr22/BrightIntosh/blob/main/BrightIntosh/GammaTechnique.swift
+https://github.com/niklasr22/BrightIntosh/blob/main/BrightIntosh/OverlayWindow.swift
+No source files from those projects are bundled. The preceding MIT attribution
+is retained for the earlier rendering implementation used by SunLift.

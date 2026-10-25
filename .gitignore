@@ -1,0 +1,21 @@
+# Generated output and local experiments
+/build/
+/dist/
+*.app/
+*.dSYM/
+.DS_Store
+.AppleDouble/
+._*
+
+# Local conversation/debug history and unused art variants
+/验证记录.txt
+/Assets/Picnic-icon-v1.png
+/Assets/Picnic-icon-tile.png
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.p12
+*.mobileprovision
+*.key
