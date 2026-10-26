@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Test policy and display table behavior
+      - name: Test policy, display tables, and localization
         run: zsh test.sh
       - name: Build and verify the Apple Silicon app
         run: zsh build.sh
