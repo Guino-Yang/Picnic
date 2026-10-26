@@ -4,19 +4,21 @@
 
 ## Install and use
 
-Download the Apple Silicon ZIP from [Releases](https://github.com/Guino-Yang/Picnic/releases), unzip it, and move `Picnic.app` to Applications or `~/Applications`. Open it and click the basket in the menu bar. The current app interface is in Chinese; the main controls are:
+Download the Apple Silicon ZIP from [Releases](https://github.com/Guino-Yang/Picnic/releases), unzip it, and move `Picnic.app` to Applications or `~/Applications`. Open it and click the basket in the menu bar. Picnic follows your macOS preferred languages, choosing English, Japanese, or Simplified Chinese. If none of your preferred languages is supported, it falls back to English. macOS per-app language preferences are supported too; relaunch Picnic after changing the language. Menu text, accessibility labels, status messages, and bundled help use the selected language.
 
-| Control | Meaning |
-| --- | --- |
-| 关闭 | Off; remove the boost |
-| 自动 | Auto; follow ambient light |
-| 手动 | Manual; use a fixed 2× boost |
-| 登录时启动 | Launch at login |
-| 退出 | Quit Picnic |
+The main controls are:
+
+| English | 日本語 | 简体中文 | Meaning |
+| --- | --- | --- | --- |
+| Off | オフ | 关闭 | Remove the boost |
+| Auto | 自動 | 自动 | Follow ambient light |
+| Manual | 手動 | 手动 | Use a fixed 2× boost |
+| Launch at Login | ログイン時に起動 | 登录时启动 | Start automatically |
+| Quit Picnic | Picnic を終了 | 退出 Picnic | Restore and quit |
 
 Regular launches start in Auto mode and keep your saved thresholds. Adjust screen brightness with the usual keyboard keys or macOS Control Center. The basket is an outline while idle and filled while boosting. Normal shutdown restores the display table owned by Picnic and removes its EDR trigger window.
 
-To uninstall, disable “登录时启动”, quit normally, and move the app to the Trash. There is no separate background daemon or driver.
+To uninstall, disable “Launch at Login”, quit normally, and move the app to the Trash. There is no separate background daemon or driver.
 
 <p align="center">
   <img src="menu-preview.svg" width="360" alt="Illustration of Picnic’s Chinese menu with two ambient-light sliders">
@@ -72,8 +74,9 @@ Picnic applies a **256-entry CoreGraphics display transfer table** and keeps EDR
 | `Sources/AmbientSensor.c` | Read-only ambient light sampling |
 | `Sources/main.swift` | Native menu, status icon, and diagnostics |
 | `Sources/LoginItems.swift` | macOS login item |
+| `Sources/Localization.swift` and `Resources/*.lproj` | Native language selection, translations, and help |
 
-There are **97 policy and display-table checks**. GitHub Actions runs these tests and builds the app; it does not test a physical display. Manual observations covered the desktop, menus, Mission Control, brightness controls, and a simulated-light sequence driving the real screen through 1.5× → 2× → 1.5× → off. No luminance meter was used. See the [detailed test record (中文)](TESTING.md) for coverage and diagnostic options.
+There are **97 policy and display-table checks**, plus bundle-localization checks for all three languages, English fallback, and selection from an ordered language list. GitHub Actions runs these tests and builds the app; it does not test a physical display. Manual observations covered the desktop, menus, Mission Control, brightness controls, and a simulated-light sequence driving the real screen through 1.5× → 2× → 1.5× → off. No luminance meter was used. See the [detailed test record (中文)](TESTING.md) for coverage and diagnostic options.
 
 ## Feedback and credits
 
