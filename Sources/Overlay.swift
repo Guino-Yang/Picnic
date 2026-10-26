@@ -82,14 +82,14 @@ final class BoostOverlay: NSObject, MTKViewDelegate {
     }
     private func applyPendingGain() {
         guard !closed, completedFrames >= 3 else { return }
-        if !displayGain.setGain(requestedGain) { onError?(displayGain.error ?? "无法设置内屏增益") }
+        if !displayGain.setGain(requestedGain) { onError?(displayGain.error ?? L10n.text(.gainFailed)) }
     }
     func maintain() {
         guard !closed, completedFrames >= 3 else { return }
         let now = ProcessInfo.processInfo.systemUptime
         guard now >= nextIntegrityCheck else { return }
         nextIntegrityCheck = now + 1
-        if !displayGain.refresh() { onError?(displayGain.error ?? "内屏输出表验证失败") }
+        if !displayGain.refresh() { onError?(displayGain.error ?? L10n.text(.displayCheckFailed)) }
     }
     @discardableResult func close() -> Bool {
         guard !closed else { return true }
@@ -107,7 +107,7 @@ final class BoostOverlay: NSObject, MTKViewDelegate {
             return
         }
         guard let command = queue.makeCommandBuffer(), let encoder = command.makeRenderCommandEncoder(descriptor: pass) else {
-            onError?("无法创建绘制任务，增强已停止")
+            onError?(L10n.text(.renderTaskFailed))
             return
         }
         encoder.endEncoding()
@@ -122,7 +122,7 @@ final class BoostOverlay: NSObject, MTKViewDelegate {
                     self.applyPendingGain()
                 } else {
                     self.failedFrames += 1
-                    self.onError?("GPU 渲染失败，增强已停止")
+                    self.onError?(L10n.text(.gpuFailed))
                 }
             }
         }

@@ -1,12 +1,12 @@
 import Foundation
 
 enum Mode: String, CaseIterable { case off, auto, manual
-    var title: String { switch self { case .off: return "关闭"; case .auto: return "自动"; case .manual: return "手动" } }
+    var title: String { switch self { case .off: return L10n.text(.modeOff); case .auto: return L10n.text(.modeAuto); case .manual: return L10n.text(.modeManual) } }
 }
 
 enum BoostLevel: Double {
     case off = 1, gentle = 1.5, strong = 2
-    var label: String { self == .gentle ? "1.5×" : self == .strong ? "2×" : "未增强" }
+    var label: String { self == .gentle ? "1.5×" : self == .strong ? "2×" : L10n.text(.boostOff) }
 }
 
 struct AutoThresholds: Equatable {

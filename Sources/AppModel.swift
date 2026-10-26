@@ -9,8 +9,8 @@ final class AppModel: ObservableObject {
     var gain: Double { boostLevel.rawValue }
     @Published private(set) var lux: Double?
     @Published private(set) var active = false
-    @Published private(set) var status = "正在检查内屏…"
-    @Published private(set) var screenName = "未检测到 MacBook 内屏"
+    @Published private(set) var status = L10n.text(.checkingDisplay)
+    @Published private(set) var screenName = L10n.text(.noDisplay)
     @Published private(set) var headroom: Double = 1
     @Published private(set) var hasInternalScreen = false
     var onChange: (() -> Void)?
@@ -90,11 +90,11 @@ final class AppModel: ObservableObject {
         lux = sensor.isFinite ? sensor : nil
         let screen = NSScreen.screens.first(where: { $0.isInternal })
         hasInternalScreen = screen != nil
-        screenName = screen?.localizedName ?? "未检测到 MacBook 内屏"
+        screenName = screen?.localizedName ?? L10n.text(.noDisplay)
         headroom = screen.map { Double($0.maximumExtendedDynamicRangeColorComponentValue) } ?? 1
         var reason: String?
-        if screen == nil { reason = "请打开 MacBook 内屏；外接屏不会被增强" }
-        else if screen?.supportsBoost != true { reason = "内屏 EDR 不可用，或当前正在镜像显示" }
+        if screen == nil { reason = L10n.text(.openDisplay) }
+        else if screen?.supportsBoost != true { reason = L10n.text(.unsupportedDisplay) }
         else if let renderError { reason = renderError }
         let requestedLevel = policy.update(mode: mode, lux: lux, thresholds: thresholds, allowed: reason == nil, now: ProcessInfo.processInfo.systemUptime)
         if requestedLevel != .off, let screen {
@@ -114,14 +114,14 @@ final class AppModel: ObservableObject {
                 let target = requestedLevel.rawValue
                 if rampTarget != target || (ramp == nil && abs(currentGain-target) > 0.01) { startRamp(to: target) }
                 // Sensor polling changes no drawables; MTKView independently maintains EDR at 5 fps.
-                status = "\(mode == .auto ? "自动" : "手动") · \(requestedLevel.label) 增强中"
-            } else { status = "无法初始化内屏增强，请先关闭其他调光工具"; active = false }
+                status = L10n.format(.activeStatus, mode.title, requestedLevel.label)
+            } else { status = L10n.text(.initializationFailed); active = false }
         } else {
             stop()
-            if mode == .off { status = "增强已关闭" }
+            if mode == .off { status = L10n.text(.boostDisabled) }
             else if let reason { status = reason }
-            else if lux == nil { status = "环境光读数不可用，自动增强已暂停" }
-            else { status = "自动待命 · 等待持续明亮环境" }
+            else if lux == nil { status = L10n.text(.sensorUnavailable) }
+            else { status = L10n.text(.autoWaiting) }
         }
         onChange?()
     }
@@ -148,7 +148,7 @@ final class AppModel: ObservableObject {
         for (center, token) in observers { center.removeObserver(token) }; observers.removeAll()
     }
     func diagnostics() -> [String: Any] {
-        ["version": "2.0.0", "os": ProcessInfo.processInfo.operatingSystemVersionString,
+        ["version": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "2.1.0", "language": L10n.language, "os": ProcessInfo.processInfo.operatingSystemVersionString,
          "mode": mode.rawValue, "active": active, "status": status,
          "gentleThresholdLux": thresholds.gentle, "strongThresholdLux": thresholds.strong,
          "disableThresholdLux": thresholds.gentle * BoostPolicy.releaseRatio,

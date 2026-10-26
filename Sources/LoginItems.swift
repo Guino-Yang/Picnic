@@ -23,7 +23,7 @@ final class LoginItems: ObservableObject {
                 try SMAppService.mainApp.unregister()
             }
         } catch {
-            self.error = "登录项设置失败：\(error.localizedDescription)"
+            self.error = L10n.format(.loginError, error.localizedDescription)
         }
         refresh()
     }

@@ -69,19 +69,19 @@ final class DisplayGain {
     @discardableResult func setGain(_ value: Float) -> Bool {
         guard !ended, let target = baseline.scaled(by: value) else { return false }
         if let applied, applied.matches(target) { gain = value; return true }
-        guard io.write(target) else { error = "无法写入内屏输出表，增强已停止"; return false }
+        guard io.write(target) else { error = L10n.text(.displayWriteFailed); return false }
         gain = value; applied = target; writeCount += 1
         return true
     }
     func refresh() -> Bool {
         guard !ended else { return false }
         guard let expected = applied else { return true }
-        guard let current = io.read() else { error = "无法读取内屏输出表，增强已停止"; return false }
+        guard let current = io.read() else { error = L10n.text(.displayReadFailed); return false }
         if current.matches(expected) { consecutiveRecoveries = 0; return true }
         // A fresh SDR table can be supplied by ColorSync (e.g. a display-setting
         // change). Rebase once, never multiply our previous 2x table by 2 again.
         guard current.isSDR, consecutiveRecoveries < 3 else {
-            error = "内屏输出表持续被改写，增强已停止"; return false
+            error = L10n.text(.displayConflict); return false
         }
         baseline = current
         applied = nil

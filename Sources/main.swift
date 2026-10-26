@@ -10,8 +10,8 @@ struct MenuSummary: View {
                 Spacer()
                 Text(model.boostLevel.label).font(.system(size: 12, weight: .medium)).foregroundStyle(.secondary)
             }
-            Text(model.status).font(.system(size: 12)).foregroundStyle(.secondary).lineLimit(1)
-            Text(model.lux.map { String(format: "环境光 %.0f lx · 仅内屏", $0) } ?? "环境光不可用 · 仅内屏")
+            Text(model.status).font(.system(size: 12)).foregroundStyle(.secondary).lineLimit(2).help(model.status)
+            Text(model.lux.map { L10n.format(.ambient, $0) } ?? L10n.text(.ambientUnavailable))
                 .font(.system(size: 11)).foregroundStyle(.secondary)
         }.padding(.horizontal, 14).frame(width: 286, height: 70)
     }
@@ -22,22 +22,22 @@ struct ThresholdControl: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack {
-                Text("1.5× 轻增强")
+                Text(L10n.text(.gentleTier))
                 Spacer()
                 Text("\(Int(model.thresholds.gentle)) lx").monospacedDigit().foregroundStyle(.secondary)
             }.font(.system(size: 12))
             Slider(value: Binding(get: { model.thresholds.gentle }, set: model.setGentleThreshold), in: model.thresholds.gentleRange, step: AutoThresholds.step)
-                .controlSize(.small).accessibilityLabel("1.5倍增强开启阈值")
+                .controlSize(.small).accessibilityLabel(L10n.text(.gentleAccessibility))
             HStack {
-                Text("2× 强增强")
+                Text(L10n.text(.strongTier))
                 Spacer()
                 Text("\(Int(model.thresholds.strong)) lx").monospacedDigit().foregroundStyle(.secondary)
             }.font(.system(size: 12)).padding(.top, 6)
             Slider(value: Binding(get: { model.thresholds.strong }, set: model.setStrongThreshold), in: model.thresholds.strongRange, step: AutoThresholds.step)
-                .controlSize(.small).accessibilityLabel("2倍增强开启阈值")
-            Text("升档持续 3 秒 · 降档持续 5 秒")
+                .controlSize(.small).accessibilityLabel(L10n.text(.strongAccessibility))
+            Text(L10n.text(.delays))
                 .font(.system(size: 10)).foregroundStyle(.secondary)
-            Text("≤\(Int(model.thresholds.gentle * 0.6)) lx 关闭 · ≤\(Int(model.thresholds.strong * 0.6)) lx 降为 1.5×")
+            Text(L10n.format(.releaseThresholds, Int(model.thresholds.gentle * 0.6), Int(model.thresholds.strong * 0.6)))
                 .font(.system(size: 10)).foregroundStyle(.secondary).lineLimit(1)
         }.padding(.horizontal, 14).frame(width: 286, height: 154)
     }
@@ -58,7 +58,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private static let outlineBasket = basketIcon("basket")
     private static let filledBasket = basketIcon("basket.fill")
     private static func basketIcon(_ name: String) -> NSImage? {
-        let image = NSImage(systemSymbolName: name, accessibilityDescription: "Picnic 亮度增强")?
+        let image = NSImage(systemSymbolName: name, accessibilityDescription: L10n.text(.iconAccessibility))?
             .withSymbolConfiguration(.init(pointSize: 17, weight: .regular))
         image?.size = NSSize(width: 20, height: 17)
         image?.isTemplate = true
@@ -66,7 +66,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     func applicationDidFinishLaunching(_ notification: Notification) {
         let tierTest = CommandLine.arguments.contains("--test-auto-tiers")
-        let testing = tierTest || CommandLine.arguments.contains("--smoke-test") || CommandLine.arguments.contains("--test-boost") || CommandLine.arguments.contains("--test-system-ui")
+        let localizationPreview = CommandLine.arguments.contains("--test-menu-localization")
+        let testing = localizationPreview || tierTest || CommandLine.arguments.contains("--smoke-test") || CommandLine.arguments.contains("--test-boost") || CommandLine.arguments.contains("--test-system-ui")
         model = tierTest ? AppModel(initialMode: .off, readLux: { [weak self] in self?.testLux ?? .nan }) : AppModel(initialMode: testing ? .off : .auto)
         for code in [SIGTERM, SIGINT] {
             signal(code, SIG_IGN)
@@ -81,7 +82,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         item.menu = tierTest ? nil : menu
         model.onChange = { [weak self] in self?.refreshIcon() }
         refreshIcon()
-        if tierTest {
+        if localizationPreview {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in self?.item.button?.performClick(nil) }
+            // A bounded, non-boosting preview; never write language preferences.
+            let previewDuration = CommandLine.arguments.contains("--test-menu-layout") ? 3.0 : 45.0
+            let timer = Timer(timeInterval: previewDuration, repeats: false) { _ in NSApp.terminate(nil) }
+            RunLoop.main.add(timer, forMode: .common)
+        } else if tierTest {
             runTierTest()
         } else if CommandLine.arguments.contains("--test-boost") || CommandLine.arguments.contains("--test-system-ui") {
             guard model.hasInternalScreen else { print("No internal display: boost test refused"); NSApp.terminate(nil); return }
@@ -201,14 +208,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         threshold.view = slider
         menu.addItem(threshold)
         menu.addItem(.separator())
-        loginItem = actionItem("登录时启动", #selector(toggleLoginItem))
-        approvalItem = actionItem("在系统设置中允许登录启动…", #selector(openLoginSettings))
-        loginErrorItem = NSMenuItem(title: "登录项设置失败", action: nil, keyEquivalent: "")
+        loginItem = actionItem(L10n.text(.launchAtLogin), #selector(toggleLoginItem))
+        approvalItem = actionItem(L10n.text(.approveLogin), #selector(openLoginSettings))
+        loginErrorItem = NSMenuItem(title: L10n.text(.loginFailed), action: nil, keyEquivalent: "")
         loginErrorItem.isEnabled = false
         menu.addItem(loginErrorItem)
         menu.addItem(.separator())
-        _ = actionItem("使用说明…", #selector(showHelp))
-        _ = actionItem("退出 Picnic", #selector(quit))
+        _ = actionItem(L10n.text(.help), #selector(showHelp))
+        _ = actionItem(L10n.text(.quit), #selector(quit))
     }
     private func actionItem(_ title: String, _ action: Selector) -> NSMenuItem {
         let entry = NSMenuItem(title: title, action: action, keyEquivalent: "")
@@ -256,7 +263,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func toggleLoginItem() { loginItems.setEnabled(!loginItems.enabled) }
     @objc private func openLoginSettings() { loginItems.openSettings() }
     @objc private func showHelp() {
-        if let url = Bundle.main.url(forResource: "使用说明", withExtension: "txt") { NSWorkspace.shared.open(url) }
+        if let url = L10n.helpURL { NSWorkspace.shared.open(url) }
     }
     @objc private func quit() { NSApp.terminate(nil) }
     func printDiagnostics() {
@@ -267,7 +274,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
 let app = NSApplication.shared
 app.setActivationPolicy(.accessory)
-if CommandLine.arguments.contains("--login-item-status") {
+if CommandLine.arguments.contains("--diagnose-localization") {
+    let data = try JSONSerialization.data(withJSONObject: L10n.diagnostics, options: [.prettyPrinted, .sortedKeys])
+    print(String(data: data, encoding: .utf8)!)
+} else if CommandLine.arguments.contains("--login-item-status") {
     let data = try JSONSerialization.data(withJSONObject: LoginItems.diagnostics, options: [.prettyPrinted, .sortedKeys])
     print(String(data: data, encoding: .utf8)!)
 } else if CommandLine.arguments.contains("--diagnose") {
