@@ -1,0 +1,26 @@
+Picnic 2.1 — Bring your MacBook into the sunshine ☀️ 🧺
+
+Click the basket in your menu bar. An outline means standby or off; a filled basket means the display is being boosted.
+
+Auto mode
+• By default, 1500 lx for 3 seconds activates 1.5×; 3000 lx for 3 seconds activates 2×.
+• Each tier releases at 60% of its activation threshold: by default, ≤1800 lx for 5 seconds drops to 1.5×, and ≤900 lx for 5 seconds turns the boost off.
+• Adjust both thresholds with the sliders: 500–5000 lx overall, in 250 lx steps. The second threshold stays at least 250 lx above the first.
+• Gain transitions take about 2 seconds. Changing a threshold restarts the timer; your settings are kept for the next launch.
+
+Manual mode always uses 2×. Adjust brightness with your keyboard brightness keys or macOS Control Center.
+Off or a normal quit restores the display table owned by Picnic and removes its HDR trigger.
+
+Enable Launch at Login to use the native macOS login item. Normal launches start in Auto mode.
+Picnic follows your Mac’s preferred language: English, Japanese, or Simplified Chinese. Relaunch Picnic after changing the language. If none is supported, it uses English.
+Only the non-mirrored MacBook built-in display is boosted. There is no separate background daemon or driver.
+
+Compatibility
+Built for Apple Silicon and macOS 14+. Observed on a 14-inch M1 Pro MacBook Pro with macOS 27.0.1.
+Gain is not a calibrated physical brightness multiplier and does not guarantee 1000 nits. Turn boost off for color-critical work.
+The read-only ambient light interface is not a public API; system updates may affect compatibility. Avoid using other display-table dimming tools at the same time.
+Picnic adds no pause policy for temperature, low battery, lock, or sleep. macOS display sleep and hardware protections still apply.
+Release builds are ad-hoc signed, without Apple Developer ID signing or notarization.
+
+Project, build instructions, and validation scope: https://github.com/Guino-Yang/Picnic
+License: MIT. Third-party credits: bundled NOTICES.txt.
