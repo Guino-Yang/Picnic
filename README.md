@@ -23,7 +23,9 @@ That’s why I made **Picnic**: a little extra screen brightness for working in 
 
 **[Download Picnic →](https://github.com/Guino-Yang/Picnic/releases)**
 
-Unzip, move `Picnic.app` to Applications, and open the little basket in your menu bar. Enable “登录时启动” (Launch at login) if you’d like it to come along every day.
+Unzip, move `Picnic.app` to Applications, and open the little basket in your menu bar. Enable “Launch at Login” if you’d like it to come along every day.
+
+🌏 Picnic follows your Mac’s language: English, 日本語, or 简体中文.
 
 <details>
 <summary>A little note before you pack</summary>
@@ -50,7 +52,9 @@ For Apple Silicon MacBook built-in displays, on macOS 14 or later. This is an ex
 
 **[Picnic をダウンロード →](https://github.com/Guino-Yang/Picnic/releases)**
 
-解凍した `Picnic.app` を「アプリケーション」に入れて起動し、メニューバーのバスケットをクリック。毎日一緒に起動したいときは、メニューの「登录时启动」をオンにしてください。
+解凍した `Picnic.app` を「アプリケーション」に入れて起動し、メニューバーのバスケットをクリック。毎日一緒に起動したいときは、メニューの「ログイン時に起動」をオンにしてください。
+
+🌏 Picnic は、Mac の言語に合わせて英語・日本語・簡体字中国語で表示します。
 
 <details>
 <summary>出かける前に、ひとつだけ</summary>
@@ -78,6 +82,8 @@ Apple Silicon 搭載 MacBook の内蔵ディスプレイ向け。macOS 14 以降
 **[下载 Picnic →](https://github.com/Guino-Yang/Picnic/releases)**
 
 解压后把 `Picnic.app` 放进「应用程序」，启动后点开菜单栏的小篮子。想每天一起出发，就勾选「登录时启动」。
+
+🌏 Picnic 会跟随 Mac 的语言，自动显示英文、日文或简体中文。
 
 <details>
 <summary>出发前的小提醒</summary>
